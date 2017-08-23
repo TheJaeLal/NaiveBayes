@@ -1,2 +1,2 @@
 # NaiveBayes
-Naive Bayes Classifier Implementation
+Naive Bayes' Classifier Implementation
