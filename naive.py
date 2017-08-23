@@ -1,3 +1,10 @@
+import sys
+
+if len(sys.argv) == 1:
+	raise KeyError('Specify file Name as Command Line Argument')
+
+CSVfile = sys.argv[1]
+
 def print_table(Yes,No,pYes,pNo,AttrName,AttrClasses):
 	print('{:10} {:5} {:5}'.format(AttrName,'Yes','No'))
 	for c in AttrClasses:
@@ -28,7 +35,7 @@ def print_table(Yes,No,pYes,pNo,AttrName,AttrClasses):
 
 
 ##########File/Data Handling###############
-dataFile = open('weather.csv','r')
+dataFile = open(CSVfile,'r')
 dataset = dataFile.read().split('\n')
 dataFile.close()
 #Columns = ['Outlook','Temp','Humidity','Windy','PlayGolf']
@@ -95,8 +102,11 @@ print('Number of No:',nNo)
 # print(featureProbabilites)
 ############Query##############
 print('******************************')
-print('Enter Your Query.....',end = '\n>>> ')
-query = input().split()
+print('Enter Your Query.....',end = '\n')
+query = []
+for i,attribute in enumerate(Columns[:-1]):
+	print('What is the value of',attribute,'?',list(featureProbabilites[i*2]),end = '\n>>> ')
+	query.append(input().strip())
 
 #print(query)
 
@@ -118,6 +128,6 @@ print('Likelihood_of_Yes =',Likelihood_of_Yes)
 print('Likelihood_of_No =',Likelihood_of_No)
 
 if Likelihood_of_Yes > Likelihood_of_No:
-	print('Yes')
+	print('Output: Yes')
 else:
-	print('No')
+	print('Output: No')

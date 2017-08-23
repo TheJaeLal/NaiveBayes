@@ -12,4 +12,6 @@ rainy,mild,normal,true,yes
 overcast,mild,high,true,yes
 overcast,hot,normal,false,yes
 sunny,mild,high,true,no
+overcast,hot,high,true,no
+rainy,cool,normal,true,no
 Outlook,Temp,Humidity,Windy,PlayGolf
