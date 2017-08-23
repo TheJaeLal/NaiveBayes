@@ -32,7 +32,9 @@ dataFile = open('weather.csv','r')
 dataset = dataFile.read().split('\n')
 dataFile.close()
 Columns = ['Outlook','Temp','Humidity','Windy','PlayGolf']
-
+pofYes = 0 
+pofNo = 0
+featureProbabilites = []
 
 ####################Attribute 1 outlook#######################
 for i in range(len(Columns)-1):
@@ -63,6 +65,9 @@ for i in range(len(Columns)-1):
 	Yes['total'] = totalYes
 	No['total'] = totalNo
 
+	nYes = Yes['total']
+	nNo = No['total']
+
 	pYes = dict()
 	pNo = dict()
 
@@ -74,8 +79,39 @@ for i in range(len(Columns)-1):
 		if c!='total':
 			pNo[c] = No[c]/No['total']
 
+	featureProbabilites.append(pYes)
+	featureProbabilites.append(pNo)
+
 	print('*********************************')
 	print_table(Yes,No,pYes,pNo,Columns[i],classes)
 
 
+print('Number of Yes:',nYes)
+print('Number of No:',nNo)
 
+print('\n')
+print(featureProbabilites)
+############Query##############
+print('******************************')
+print('Enter Your Query.....')
+query = input().split()
+
+for i in range(len(query)):
+
+	Likelihood_of_Yes = nYes
+	Likelihood_of_No = nNo
+
+	if query[i] in featureProbabilites[i*2]:
+		Likelihood_of_Yes *= featureProbabilites[i*2][query[i]]
+		Likelihood_of_No *= featureProbabilites[(i*2)+1][query[i]]
+
+	else:
+		raise KeyError('No instance of '+query[i]+' class exists in the DataSet!')
+
+print('Likelihood_of_Yes =',Likelihood_of_Yes)
+print('Likelihood_of_No =',Likelihood_of_No)
+
+if Likelihood_of_Yes > Likelihood_of_No:
+	print('Yes')
+else:
+	print('No')
