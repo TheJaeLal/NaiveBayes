@@ -31,12 +31,14 @@ def print_table(Yes,No,pYes,pNo,AttrName,AttrClasses):
 dataFile = open('weather.csv','r')
 dataset = dataFile.read().split('\n')
 dataFile.close()
-Columns = ['Outlook','Temp','Humidity','Windy','PlayGolf']
+#Columns = ['Outlook','Temp','Humidity','Windy','PlayGolf']
+Columns = dataset[-1].split(',')
+#print(Columns)
+dataset.pop()
 pofYes = 0 
 pofNo = 0
 featureProbabilites = []
 
-####################Attribute 1 outlook#######################
 for i in range(len(Columns)-1):
 	Yes = dict()
 	No = dict()
@@ -89,17 +91,21 @@ for i in range(len(Columns)-1):
 print('Number of Yes:',nYes)
 print('Number of No:',nNo)
 
-print('\n')
-print(featureProbabilites)
+# print('\n')
+# print(featureProbabilites)
 ############Query##############
 print('******************************')
-print('Enter Your Query.....')
+print('Enter Your Query.....',end = '\n>>> ')
 query = input().split()
+
+#print(query)
+
+Likelihood_of_Yes = nYes
+Likelihood_of_No = nNo
 
 for i in range(len(query)):
 
-	Likelihood_of_Yes = nYes
-	Likelihood_of_No = nNo
+	#print('Checking',query[i])
 
 	if query[i] in featureProbabilites[i*2]:
 		Likelihood_of_Yes *= featureProbabilites[i*2][query[i]]
